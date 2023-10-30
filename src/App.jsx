@@ -31,8 +31,8 @@ export default function App() {
       ukCelsius("34.4 celsius");
       ukStones("21.4 stones");
     } else {
-      ukCelsius("300 pounds");
-      ukStones("94 fahrenheit");
+      ukCelsius("94 fahrenheit");
+      ukStones("300 pounds");
     }
 
     if (cname != "") {

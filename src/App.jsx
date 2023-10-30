@@ -4,27 +4,43 @@ export default function App() {
   const [showStory, newStory] = useState(false);
   const xs = ["Willy the Goblin", "Big Daddy", "Father Christmas"];
   const ys = ["the soup kitchen", "Disneyland", "the White House"];
-  const zs = ["spontaneously combusted", "melted into a puddle on the sidewalk", "turned into a slug and crawled away"];
+  const zs = [
+    "spontaneously combusted",
+    "melted into a puddle on the sidewalk",
+    "turned into a slug and crawled away",
+  ];
+  
   const [xItem, newXItem] = useState(randomValueFromArray(xs));
   const [yItem, newYItem] = useState(randomValueFromArray(ys));
   const [zItem, newZItem] = useState(randomValueFromArray(zs));
-  const [name,newName] = useState("");
-  const [ukus,setUkus] = useState("us");
+  const [name, newName] = useState("");
+  const [ukus, setUkus] = useState("us");
+  const [usPond, ukStones] = useState("300 pounds");
+  const [usFahrenheit, ukCelsius] = useState("94 fahrenheit");
 
-  function handleClickGenerateButton() {
-
+  function handleClickGenerateButton(event) {
+    event.preventDefault();
     newXItem(randomValueFromArray(xs));
     newYItem(randomValueFromArray(ys));
     newZItem(randomValueFromArray(zs));
+    console.log("did");
 
     const cname = document.querySelector(".changeName").value;
-    if(cname != "")
-    {
+
+    if (ukus == "uk") {
+      ukCelsius("34.4 celsius");
+      ukStones("21.4 stones");
+    } else {
+      ukCelsius("300 pounds");
+      ukStones("94 fahrenheit");
+    }
+
+    if (cname != "") {
       newName(cname);
-    }else
-    {
+    } else {
       newName("Bob");
     }
+
     newStory(true);
   }
 
@@ -32,7 +48,7 @@ export default function App() {
     const random = Math.floor(Math.random() * array.length);
     return array[random];
   }
-  
+
   function handleRadioChange(event) {
     setUkus(event.target.value);
   }
@@ -41,28 +57,30 @@ export default function App() {
     <>
       <div>
         <label htmlFor="customname">Enter custom name:</label>
-        <input type="text" placeholder="" className="changeName"/>
-        
+        <input type="text" placeholder="" className="changeName" />
       </div>
       <div>
-        <label htmlFor="us">US</label>
-        <input type="radio" value="us" checked={ukus === "us"} onChange = {handleRadioChange} />
-        <label htmlFor="uk">UK</label>
-        <input type="radio" value="uk" checked={ukus === "uk"} onChange = {handleRadioChange} />
+        <form onSubmit={handleClickGenerateButton}>
+          <div onChange={handleRadioChange}>
+            <label htmlFor="us">US</label>
+            <input type="radio" value="us" checked={ukus === "us"} />
+            <label htmlFor="uk">UK</label>
+            <input type="radio" value="uk" checked={ukus === "uk"} />
+          </div>
+          <div>
+            <button type="submit">Generate random story</button>
+          </div>
+        </form>
       </div>
-      <div>
-        <button onClick={handleClickGenerateButton}>Generate random story</button>
-      </div>
+
       {showStory && (
         <p>
-          It was {ukus === "us" ? "94 fahrenheit" : "34.4 celsius"} outside, so {xItem} went for a walk. When they
-          got to {yItem}, they stared in horror for a few moments, then {zItem}. 
-          {name} saw the whole thing, but was not surprised — {xItem} weighs {ukus == "us" ? "300 pounds"
-           : "21.4 stones" }, and it was a hot day.
+          It was {usFahrenheit} outside, so {xItem} went for a walk. When they
+          got to {yItem}, they stared in horror for a few moments, then {zItem}.
+          {name} saw the whole thing, but was not surprised — {xItem} weighs{" "}
+          {usPond}, and it was a hot day.
         </p>
       )}
-
     </>
-
   );
 }

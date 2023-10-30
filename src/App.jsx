@@ -32,6 +32,7 @@ export default function App() {
     const random = Math.floor(Math.random() * array.length);
     return array[random];
   }
+  
   function handleRadioChange(event) {
     setUkus(event.target.value);
   }
